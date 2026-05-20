@@ -260,17 +260,42 @@ function Navbar() {
 
     return localStorage.getItem('theme') || 'dark';
   });
+  const themeTimerRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('theme', theme);
   }, [theme]);
 
+  useEffect(() => {
+    return () => {
+      if (themeTimerRef.current) {
+        window.clearTimeout(themeTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleThemeToggle = () => {
+    const root = document.documentElement;
+
+    root.classList.add('theme-transitioning');
+    setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'));
+
+    if (themeTimerRef.current) {
+      window.clearTimeout(themeTimerRef.current);
+    }
+
+    themeTimerRef.current = window.setTimeout(() => {
+      root.classList.remove('theme-transitioning');
+      themeTimerRef.current = null;
+    }, 520);
+  };
+
   return (
     <header className="site-header">
       <nav className="navbar" aria-label="Main navigation">
         <a className="brand" href="#top" aria-label="Meesum Abbas home">
-          <span>MA</span>
+          <img src="/faviconprofolio.png" alt="" aria-hidden="true" width="38" height="38" />
           <strong>Meesum Abbas</strong>
         </a>
         <button className="menu-button" type="button" aria-label="Toggle navigation menu" aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen(!open)}>
@@ -292,7 +317,7 @@ function Navbar() {
           type="button"
           aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           aria-pressed={theme === 'light'}
-          onClick={() => setTheme((currentTheme) => (currentTheme === 'dark' ? 'light' : 'dark'))}
+          onClick={handleThemeToggle}
         >
           {theme === 'dark' ? (
             <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">

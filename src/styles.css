@@ -35,6 +35,50 @@
   box-sizing: border-box;
 }
 
+html.theme-transitioning,
+html.theme-transitioning body,
+html.theme-transitioning body::before,
+html.theme-transitioning .navbar,
+html.theme-transitioning .theme-toggle,
+html.theme-transitioning .nav-links a,
+html.theme-transitioning .hero-visual,
+html.theme-transitioning .hero-signal-card,
+html.theme-transitioning .social-buttons a,
+html.theme-transitioning .stat-card,
+html.theme-transitioning .project-card,
+html.theme-transitioning .experience-card,
+html.theme-transitioning .education-card,
+html.theme-transitioning .skill-card,
+html.theme-transitioning .skill-lane,
+html.theme-transitioning .skills-orbit-panel,
+html.theme-transitioning .achievement-grid article,
+html.theme-transitioning .contact-panel,
+html.theme-transitioning .contact-form,
+html.theme-transitioning .footer,
+html.theme-transitioning .velocity-band,
+html.theme-transitioning .project-media,
+html.theme-transitioning .project-media-screen,
+html.theme-transitioning .project-media-actions a,
+html.theme-transitioning .contact-links a,
+html.theme-transitioning .footer-links a,
+html.theme-transitioning .interactive-hover-button,
+html.theme-transitioning .interactive-hover-icon,
+html.theme-transitioning .primary,
+html.theme-transitioning .secondary,
+html.theme-transitioning .ghost {
+  transition:
+    background-color 420ms ease,
+    background 420ms ease,
+    color 420ms ease,
+    border-color 420ms ease,
+    box-shadow 420ms ease,
+    text-shadow 420ms ease,
+    fill 420ms ease,
+    stroke 420ms ease,
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -51,6 +95,9 @@ body {
     radial-gradient(circle at 78% 8%, rgba(38, 119, 255, 0.24), transparent 30rem),
     linear-gradient(180deg, #050914 0%, #07101d 47%, #050914 100%);
   color: var(--text);
+  transition:
+    background 420ms ease,
+    color 420ms ease;
 }
 
 :root[data-theme="light"] body {
@@ -68,6 +115,7 @@ body::before {
   background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(to bottom, black, transparent 78%);
+  transition: opacity 420ms ease, background 420ms ease;
 }
 
 a {
@@ -159,6 +207,12 @@ textarea {
   background: rgba(5, 9, 20, 0.78);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.24);
   backdrop-filter: blur(18px);
+  transition:
+    background 420ms ease,
+    border-color 420ms ease,
+    box-shadow 420ms ease,
+    color 420ms ease,
+    transform 420ms ease;
 }
 
 :root[data-theme="light"] .navbar {
@@ -182,6 +236,15 @@ textarea {
   background: linear-gradient(135deg, var(--blue), var(--cyan));
   color: #03111f;
   font-weight: 900;
+}
+
+.brand img {
+  display: block;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(78, 216, 255, 0.24);
 }
 
 .brand strong {
@@ -223,7 +286,7 @@ textarea {
   border-radius: 50%;
   background: rgba(47, 140, 255, 0.12);
   color: var(--text);
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease;
 }
 
 .theme-toggle:hover,
@@ -591,6 +654,11 @@ h3 {
     var(--panel);
   padding: 12px;
   box-shadow: var(--shadow);
+  transition:
+    background 420ms ease,
+    border-color 420ms ease,
+    box-shadow 420ms ease,
+    transform 420ms ease;
 }
 
 :root[data-theme="light"] .hero-visual {
