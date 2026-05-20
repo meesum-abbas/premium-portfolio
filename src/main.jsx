@@ -589,7 +589,7 @@ function ProjectVideo({ src, title }) {
       muted
       loop
       playsInline
-      preload="auto"
+      preload="metadata"
       onLoadedMetadata={() => {
         if (videoRef.current) {
           videoRef.current.play().catch(() => {});

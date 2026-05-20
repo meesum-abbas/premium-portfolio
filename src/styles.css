@@ -2430,6 +2430,14 @@ h3 {
     min-height: auto;
   }
 
+  .project-media-screen {
+    min-height: 180px;
+  }
+
+  .project-card:first-child .project-media-screen {
+    min-height: 220px;
+  }
+
   .project-detail ul {
     grid-template-columns: 1fr;
   }
