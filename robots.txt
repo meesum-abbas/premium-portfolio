@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://meesumabbasnaqvi.vercel.app/sitemap.xml
