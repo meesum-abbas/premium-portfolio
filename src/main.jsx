@@ -554,10 +554,32 @@ function StackIcon({ type }) {
 function ProjectVideo({ src, title }) {
   const videoRef = useRef(null);
   const [failed, setFailed] = useState(false);
+  const [useStaticPreview, setUseStaticPreview] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return undefined;
+    }
+
+    const mediaQuery = window.matchMedia('(max-width: 900px), (hover: none), (pointer: coarse)');
+    const updatePreviewMode = () => setUseStaticPreview(mediaQuery.matches);
+
+    updatePreviewMode();
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', updatePreviewMode);
+
+      return () => mediaQuery.removeEventListener('change', updatePreviewMode);
+    }
+
+    mediaQuery.addListener(updatePreviewMode);
+
+    return () => mediaQuery.removeListener(updatePreviewMode);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return undefined;
+    if (!video || useStaticPreview) return undefined;
 
     const startPlayback = async () => {
       try {
@@ -570,13 +592,13 @@ function ProjectVideo({ src, title }) {
     startPlayback();
 
     return undefined;
-  }, [src]);
+  }, [src, useStaticPreview]);
 
-  if (failed) {
+  if (failed || useStaticPreview) {
     return (
       <div className="project-media-fallback">
         <strong>{title}</strong>
-        <span>Video preview unavailable</span>
+        <span>{useStaticPreview ? 'Tap the live link to open the project' : 'Video preview unavailable'}</span>
       </div>
     );
   }
@@ -710,7 +732,7 @@ function Projects() {
             <div className="project-media">
               <div className={`project-media-screen ${project.videoUrl ? 'has-video' : ''}`}>
                 {project.videoUrl ? (
-                  <ProjectVideo src={project.videoUrl} title={project.media} />
+                  <ProjectVideo src={project.videoUrl} title={project.title} />
                 ) : (
                   <span>{project.media}</span>
                 )}

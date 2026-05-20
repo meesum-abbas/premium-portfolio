@@ -1515,7 +1515,9 @@ h3 {
   gap: 8px;
   padding: 20px;
   text-align: center;
-  background: #06101f;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(78, 216, 255, 0.18), transparent 10rem),
+    linear-gradient(145deg, rgba(10, 24, 47, 0.94), rgba(5, 12, 24, 0.98));
   color: #dcecff;
 }
 
@@ -1526,6 +1528,8 @@ h3 {
 .project-media-fallback span {
   color: #9fb2ca;
   font-size: 0.92rem;
+  max-width: 22rem;
+  line-height: 1.5;
 }
 
 .project-media-screen::before {
@@ -1654,6 +1658,17 @@ h3 {
 
 :root[data-theme="light"] .project-media-screen.has-video::before {
   opacity: 0.1;
+}
+
+:root[data-theme="light"] .project-media-fallback {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(18, 104, 227, 0.16), transparent 10rem),
+    linear-gradient(145deg, rgba(239, 246, 255, 0.96), rgba(228, 238, 252, 0.98));
+  color: #10243d;
+}
+
+:root[data-theme="light"] .project-media-fallback span {
+  color: #526275;
 }
 
 :root[data-theme="light"] .project-media-screen span.is-overlay {
