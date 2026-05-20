@@ -231,14 +231,15 @@ const timelineCard = {
   visible: { opacity: 1, y: 0, scale: 1 },
 };
 
-function Section({ id, eyebrow, title, children, className = '' }) {
+function Section({ id, eyebrow, title, children, className = '', animateOnView = true }) {
   return (
     <MotionSection
       id={id}
       className={`section ${className}`}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.18 }}
+      initial={animateOnView ? 'hidden' : false}
+      whileInView={animateOnView ? 'visible' : undefined}
+      animate={!animateOnView ? 'visible' : undefined}
+      viewport={animateOnView ? { once: true, amount: 0.18 } : undefined}
       transition={{ duration: 0.55, ease: 'easeOut' }}
       variants={fadeUp}
     >
@@ -725,7 +726,12 @@ function Skills() {
 
 function Projects() {
   return (
-    <Section id="projects" eyebrow="Featured Projects" title="Project gallery for scalable systems and product workflows">
+    <Section
+      id="projects"
+      eyebrow="Featured Projects"
+      title="Project gallery for scalable systems and product workflows"
+      animateOnView={false}
+    >
       <div className="project-gallery">
         {projects.map((project) => (
           <article className="project-card" key={project.title}>
