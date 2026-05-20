@@ -556,6 +556,7 @@ function ProjectVideo({ src, title }) {
   const videoRef = useRef(null);
   const [failed, setFailed] = useState(false);
   const [useStaticPreview, setUseStaticPreview] = useState(false);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
@@ -579,8 +580,17 @@ function ProjectVideo({ src, title }) {
   }, []);
 
   useEffect(() => {
+    if (!useStaticPreview) {
+      setShouldLoadVideo(true);
+      return;
+    }
+
+    setShouldLoadVideo(false);
+  }, [useStaticPreview, src]);
+
+  useEffect(() => {
     const video = videoRef.current;
-    if (!video || useStaticPreview) return undefined;
+    if (!video || !shouldLoadVideo) return undefined;
 
     const startPlayback = async () => {
       try {
@@ -593,13 +603,30 @@ function ProjectVideo({ src, title }) {
     startPlayback();
 
     return undefined;
-  }, [src, useStaticPreview]);
+  }, [src, shouldLoadVideo]);
 
-  if (failed || useStaticPreview) {
+  if (failed) {
     return (
       <div className="project-media-fallback">
         <strong>{title}</strong>
-        <span>{useStaticPreview ? 'Tap the live link to open the project' : 'Video preview unavailable'}</span>
+        <span>Video preview unavailable</span>
+      </div>
+    );
+  }
+
+  if (useStaticPreview && !shouldLoadVideo) {
+    return (
+      <div className="project-media-fallback project-media-fallback-action">
+        <strong>{title}</strong>
+        <span>Tap to play the project preview on mobile.</span>
+        <button
+          type="button"
+          className="project-play-button"
+          onClick={() => setShouldLoadVideo(true)}
+          aria-label={`Play preview for ${title}`}
+        >
+          Play Preview
+        </button>
       </div>
     );
   }
@@ -608,7 +635,8 @@ function ProjectVideo({ src, title }) {
     <video
       ref={videoRef}
       className="project-media-video"
-      autoPlay
+      autoPlay={!useStaticPreview}
+      controls={useStaticPreview}
       muted
       loop
       playsInline
